@@ -1,4 +1,4 @@
-name: Sync from Main
+name: Sync from Main branch
 
 on:
   push:
@@ -16,19 +16,12 @@ jobs:
         with:
           ref: deploy
           fetch-depth: 0
-          
+
       - name: Configure Git
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          
-      - name: Print debug info
-        run: |
-          echo "Current branch:"
-          git branch --show-current
-          echo "All branches:"
-          git branch -a
-          
+
       - name: Sync from main
         run: |
           git fetch origin main
