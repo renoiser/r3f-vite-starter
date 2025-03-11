@@ -4,17 +4,26 @@ on:
   push:
     branches:
       - main
+  workflow_dispatch:
 
 jobs:
   sync-branch:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v4
         with:
+          ref: deploy
           fetch-depth: 0
+
+      - name: Configure Git
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
 
       - name: Sync from main
         run: |
-          git fetch origin main:main
-          git merge main --no-edit
+          git fetch origin main
+          git merge origin/main --no-edit || (echo "Merge failed, possible conflict" && exit 1)
           git push origin deploy
