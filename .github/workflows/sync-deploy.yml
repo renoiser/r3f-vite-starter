@@ -1,0 +1,21 @@
+name: Sync from Main
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  sync-branch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.PAT }}
+
+      - name: Sync from main
+        run: |
+          git fetch origin main:main
+          git merge main --no-edit
+          git push origin deploy
