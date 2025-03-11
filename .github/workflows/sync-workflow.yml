@@ -1,4 +1,4 @@
-name: Sync from Main branch
+name: Sync from Main to Deploy
 
 on:
   push:
