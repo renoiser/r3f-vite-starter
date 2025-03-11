@@ -8,6 +8,7 @@ on:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+    environment: github-pages
     steps:
       - uses: actions/checkout@v4
 
@@ -23,6 +24,8 @@ jobs:
         run: |
           npm run build
           cp dist/index.html dist/404.html
+        env:
+          GH_PAGES: ${{ vars.GH_PAGES }}
 
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4
